@@ -4,7 +4,7 @@ Config Store
 
 - Stores configurations and are retrievable as a dictionary
 - Configurations are lazily loaded and are cached per request
-- Configurations can have a Setup action to run a setup function. Configforms will follow HttpRequests returned from that function.
+- Configurations can have a Setup action to run one-time requests dependent on the configuration data
 - Configuration is defined as a django form
 
 Installation
