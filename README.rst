@@ -6,7 +6,7 @@ Config Store
 - Configurations are lazily loaded and are cached per request
 - Configurations can have a Setup action to run a setup function. Configforms will follow HttpRequests returned from that function.
 - Configuration is defined as a django form
-- Configurations can be encrypted by subclassing EncryptedConfigurationForm
+- Configurations can be encrypted by registering a Configform as an AESEncryptedConfiguration
 
 Installation
 ============
@@ -23,7 +23,6 @@ Define your configuration form somewhere::
     from django import forms
     from django.contrib.auth.models import User
     
-    from configstore.configs import ConfigurationInstance, register
     from configstore.forms import ConfigurationForm
 
     class ExampleConfigurationForm(ConfigurationForm):
@@ -32,11 +31,20 @@ Define your configuration form somewhere::
         user = forms.ModelChoiceField(queryset=User.objects.all())
 
         def config_task(self):
-            return "Yay, you've accomplished nothing!"
+            return HttpResponseRedirect('/exampleform/configuration/')
 
 Register the form::
 
+    from configstore.configs import ConfigurationInstance, register
+
     complex_instance = ConfigurationInstance('example', 'Example Config', ExampleConfigurationForm)
+    register(complex_instance)
+
+You can instead encrypt the data in your configstore data section using a different Configuration::
+
+    from configstore.configs import AESEncryptedConfiguration, register
+
+    complex_instance = AESEncryptedConfiguration('example', 'Example Config', ExampleConfigurationForm)
     register(complex_instance)
 
 Somewhere else in your code retrieve the config and use it::
@@ -46,18 +54,3 @@ Somewhere else in your code retrieve the config and use it::
     print config['amount']
 
 
-You can also encrypt the data in your configstore data section. Configstore uses AES keyed on your django secret::
-
-    from django import forms
-    from django.contrib.auth.models import User
-
-    from configstore.configs import ConfigurationInstance, register
-    from configstore.forms import EncryptedConfigurationForm
-
-    class ExampleConfigurationForm(EncryptedConfigurationForm):
-        amount = forms.DecimalField()
-        message = forms.CharField()
-        user = forms.ModelChoiceField(queryset=User.objects.all())
-
-        def config_task(self):
-            return "Yay, you've accomplished nothing!"
