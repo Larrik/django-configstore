@@ -18,7 +18,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
 
     def run_setup(self, request, queryset):
         for item in queryset:
-            form = CONFIGS[item.key].get_form_builder()(instance=item, key=item.key)
+            form = self.get_form(request,item)(instance=item, key=item.key)
             r = form.config_task()
             if isinstance(r, HttpResponse):
                 return r
