@@ -60,7 +60,6 @@ class ConfigurationAdmin(admin.ModelAdmin):
             #'media': mark_safe(media),
             #'inline_admin_formsets': inline_admin_formsets,
             #'errors': helpers.AdminErrorList(form, formsets),
-            'root_path': getattr(self.admin_site, 'root_path', ''),
             'app_label': app_label,
             'add': True,
             'change': False,
