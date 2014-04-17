@@ -43,6 +43,7 @@ class ConfigurationInstance(object):
         except Configuration.DoesNotExist:
             return {}
         else:
+            print "getting data: %s"%configuration.data
             return self.deserialize(configuration.data)
 
     def set_data(self, data, commit=True, site=None):
@@ -148,13 +149,11 @@ class LazyDictionary(object): #this is one ugly class
 def register(configuration_instance):
     CONFIGS[configuration_instance.key] = configuration_instance
 
-def get_config(key):
+def get_config(key, force=False):
     """
     Returns a lazy object that will be evaluated at the time of getting the first attribute
     The lazy object will be unique to each thread so values may be changed on the fly
     The object also gets purged upon the beginning of each request
     """
-    if key not in CONFIG_CACHE:
-        CONFIG_CACHE[key] = LazyDictionary(CONFIGS[key].get_data)
-    return CONFIG_CACHE[key]
+    return CONFIGS[key].get_data()
 
