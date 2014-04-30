@@ -31,3 +31,4 @@ class ConfigurationForm(forms.Form):
     def config_task(self):
         return "No configuration action defined for %s" % self.key
 
+
