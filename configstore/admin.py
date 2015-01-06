@@ -45,7 +45,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
         model = self.model
         opts = model._meta
         app_label = opts.app_label
-        ordered_objects = opts.get_ordered_objects()
+        ordered_objects = []#opts.get_ordered_objects()
         obj = None
         configs = CONFIGS.items()
         def sort_by_label(a, b):

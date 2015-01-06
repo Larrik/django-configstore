@@ -1,12 +1,13 @@
 """
-Contains custom json encoders and decoders for handling more complex data types
+Contains custom json encoders and decoders for
+handling more complex data types
 """
 from django.contrib.contenttypes.models import ContentType
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.query import QuerySet
 from django.db import models
-from django.utils import simplejson
+import json as simplejson
 
 from decimal import Decimal
 

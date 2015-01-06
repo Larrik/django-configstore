@@ -1,9 +1,13 @@
-from django.conf.urls.defaults import *
+try:
+    from django.conf.urls import patterns, include
+except:
+    from django.conf.urls.defaults import patterns, include
+
 from django.contrib import admin
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    #(r'^$', 'example_app.views.display_my_config'),
+urlpatterns = patterns(
+    '',
     (r'^admin/', include(admin.site.urls)),
 )
