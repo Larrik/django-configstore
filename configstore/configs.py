@@ -149,11 +149,12 @@ class LazyDictionary(object): #this is one ugly class
 def register(configuration_instance):
     CONFIGS[configuration_instance.key] = configuration_instance
 
-def get_config(key, force=False):
+def get_config(key):
     """
-    Returns a lazy object that will be evaluated at the time of getting the first attribute
-    The lazy object will be unique to each thread so values may be changed on the fly
-    The object also gets purged upon the beginning of each request
+     Returns a lazy object that will be evaluated at the time of getting the first attribute
+     The lazy object will be unique to each thread so values may be changed on the fly
+     The object also gets purged upon the beginning of each request
     """
-    return CONFIGS[key].get_data()
-
+    if key not in CONFIG_CACHE:
+        CONFIG_CACHE[key] = LazyDictionary(CONFIGS[key].get_data)
+    return CONFIG_CACHE[key]
