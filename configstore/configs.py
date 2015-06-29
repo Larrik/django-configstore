@@ -43,7 +43,6 @@ class ConfigurationInstance(object):
         except Configuration.DoesNotExist:
             return {}
         else:
-            print "getting data: %s"%configuration.data
             return self.deserialize(configuration.data)
 
     def set_data(self, data, commit=True, site=None):
