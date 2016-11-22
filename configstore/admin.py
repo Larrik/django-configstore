@@ -9,8 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from django import template
 from django.template.response import TemplateResponse
 
-from models import Configuration
-from configs import CONFIGS
+from configstore.models import Configuration
+from configstore.configs import CONFIGS
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
