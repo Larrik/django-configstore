@@ -3,7 +3,7 @@ from django.template.response import TemplateResponse
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.contenttypes.models import ContentType
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django import template
@@ -103,7 +103,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
             return cmp(a[1].name, b[1].name)
         configs.sort(sort_by_label)
         context = {
-            'title': _('Select %s') % force_unicode(opts.verbose_name),
+            'title': _('Select %s') % force_text(opts.verbose_name),
             'configs': configs,
             'is_popup': request.REQUEST.has_key('_popup'),
             'show_delete': False,
