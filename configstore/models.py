@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.sites.models import Site
 
+
 class Configuration(models.Model):
     key = models.CharField(max_length=50)
     site = models.ForeignKey(Site)
@@ -8,7 +9,7 @@ class Configuration(models.Model):
 
     @property
     def name(self):
-        from configs import CONFIGS
+        from configstore.configs import CONFIGS
         try:
             return CONFIGS[self.key].name
         except KeyError:

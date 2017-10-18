@@ -1,9 +1,10 @@
 from django import forms
 from django.contrib.sites.models import Site
 
+
 class ConfigurationForm(forms.Form):
     site = forms.ModelChoiceField(Site.objects.all())
-    
+
     def __init__(self, *args, **kwargs):
         self.key = kwargs.pop('key')
         self.configuration = kwargs.pop('configuration')
@@ -30,5 +31,3 @@ class ConfigurationForm(forms.Form):
 
     def config_task(self):
         return "No configuration action defined for %s" % self.key
-
-
